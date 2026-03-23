@@ -2,7 +2,7 @@
 <img width="533" height="431" alt="Model_MySQL_Workbench" src="https://github.com/user-attachments/assets/13dfc683-f9a4-45b6-b2ad-1229e0a0f604" />
 
 
-The database utilizes a relational schema to manage air quality data:
+The database (DB) utilizes a relational schema to manage air quality data:
 
 * **locations**: Stores monitoring station metadata including name, city, and country.
 * **sensors**: A lookup table for unique pollutant types (e.g., PM2.5, NO2).
@@ -12,7 +12,7 @@ The database utilizes a relational schema to manage air quality data:
 
 ## Database Schema (PostgreSQL)
 
-The database (DB) is designed to store air quality data from the OpenAQ API. It follows a relational model to ensure data integrity and efficient querying of historical records.
+The DB is designed to store air quality data from the OpenAQ API. It follows a relational model to ensure data integrity and efficient querying of historical records.
 
 ```sql
 -- Table for monitoring stations (uses ID from OpenAQ API)
@@ -56,4 +56,4 @@ Used ChatGPT for:
 
 All code was reviewed and adapted manually.
 
-Database design myself.
+DB design myself.
