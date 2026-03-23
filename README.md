@@ -32,6 +32,7 @@ CREATE TABLE measurements (
     FOREIGN KEY (location_id) REFERENCES locations(id),
     FOREIGN KEY (sensor_id) REFERENCES sensors(id)
 );
+```
 
 ---
 
