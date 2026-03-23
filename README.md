@@ -1,7 +1,16 @@
-## Database Diagram in MySQL Workbench
-<img width="492" height="363" alt="Model_MySQL_Workbench" src="https://github.com/user-attachments/assets/dbf9e622-3123-4d5c-bb0a-fdab72d29ee2" />
+## Database EER Diagram (MySQL Workbench)
+<img width="533" height="431" alt="Model_MySQL_Workbench" src="https://github.com/user-attachments/assets/13dfc683-f9a4-45b6-b2ad-1229e0a0f604" />
 
-## Database in PostgreSQL (psql)
+
+The database utilizes a relational schema to manage air quality data:
+
+* **locations**: Stores monitoring station metadata including name, city, and country.
+* **sensors**: A lookup table for unique pollutant types (e.g., PM2.5, NO2).
+* **measurements**: The central fact table linking locations and sensors to specific values and timestamps.
+
+**Relationships**: Both the `locations` and `sensors` tables have **1:N non-identifying relationships** linked to the `measurements` table, ensuring data integrity while maintaining independent primary keys for each record.
+
+## Database Schema (PostgreSQL)
 
 The database (DB) is designed to store air quality data from the OpenAQ API. It follows a relational model to ensure data integrity and efficient querying of historical records.
 
