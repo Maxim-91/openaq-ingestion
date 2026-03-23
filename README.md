@@ -43,17 +43,40 @@ CREATE TABLE measurements (
 );
 ```
 
+
+## Testing and Execution
+`api.py`
+<img width="1386" height="1032" alt="001API" src="https://github.com/user-attachments/assets/70f49e6d-0c6e-464f-bd65-f28d13834f24" />
+<img width="1386" height="1032" alt="002API" src="https://github.com/user-attachments/assets/84d29669-c3c2-465a-9301-c96ce429422f" />
+
+`downloader.py`
+<img width="1468" height="1032" alt="003downloader" src="https://github.com/user-attachments/assets/9386fd05-46d6-4718-b41f-b3ebc7df99f6" />
+
+`main.py`
+<img width="1087" height="1032" alt="004main" src="https://github.com/user-attachments/assets/a54c6e98-c007-4ecc-bd14-1d7031ce914e" />
+
+Data Output (first generated `.csv` sample)
+<img width="1266" height="1032" alt="005FirstCSV" src="https://github.com/user-attachments/assets/6172e9ed-190c-4eb4-b5ef-5ec003b9b41d" />
+
 ---
 
-## AI Usage
+## AI Disclosure & Credits
 
-This project was developed with the help of AI tools.
+This project was developed with the assistance of AI tools.
 
-Used ChatGPT for:
-- understanding project requirements;
-- explaining some parts of Python code and making changes to the code;
-- debugging issues.
+### **ChatGPT was used for:**
+* understanding project requirements;
+* explaining Python segments and generating the initial structure for `main.py`;
+* debugging issues.
 
-All code was reviewed and adapted manually.
+### **Source Code & Originality:**
+* for `api.py` and `downloader.py`, the code is taken from the *"OpenAQ-projekti"* training material;
+* all code was manually reviewed, refined, and tested to ensure functionality;
+* the DB design and EER diagrams were created independently as part of the course assignment.
 
-DB design myself.
+---
+
+### The work has a continuation
+[**Maxim-91/openaq-api**](https://github.com/Maxim-91/openaq-api)
+
+---
