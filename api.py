@@ -1,11 +1,9 @@
 from urllib.parse import quote
 import requests
 
-API_KEY = "fc52bf9fcfc628b0ecaa42719bd20945eafd68bc1q5mlw63yd2u2cn0hs6jnzf2gljhr486u3dkgm2y"
-
 def get_bbox(city):
     osm_url = f"https://nominatim.openstreetmap.org/search?q={quote(city)}&format=json"
-    headers = {"User-Agent": "OpenAQCityBBox"}
+    headers = {'User-Agent': 'OpenAQCityBBox'}
 
     response = requests.get(osm_url, headers=headers).json()
 
@@ -25,9 +23,9 @@ def get_bbox(city):
 
     return openaq_bbox
 
-if __name__ == "__main__":
-    bbox = get_bbox("Helsinki")
-    print(bbox)
+#----------------------------------------------------------------------------------------------------------
+
+API_KEY = 'bd07226aacdcfebdf1823dc6f0f190a3d1497dc119f68ada51b350eaf10db253'
 
 # tämä funktio saa parametrinaan kaupungin bounding boxin get_bbox-funktiolta
 def get_openaq_locations_by_bbox(_bbox):
@@ -42,3 +40,11 @@ def get_openaq_locations_by_bbox(_bbox):
         _locations = response.json()['results']
 
     return _locations
+
+# DEBUG -----------------------------------------------------------------------------------------------------
+#if __name__ == "__main__":
+#    bbox = get_bbox("Helsinki")
+#    print("BBOX:", bbox)
+
+#    locations = get_openaq_locations_by_bbox(bbox)
+#    print("LOCATIONS:", locations)

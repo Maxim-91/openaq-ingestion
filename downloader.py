@@ -14,7 +14,17 @@ def download_file_by_location(location_id, year, month, day):
     if response.status_code == 200:
         # pandas osaa avata gzip-pakatun csv
         df = pd.read_csv(io.BytesIO(response.content), compression='gzip')
-        df.to_csv(f"{location_id}-{date_str}.csv", index=False)
+        df.to_csv(f"{location_id}-{date_str}.csv", index=False) # Save locally (optional)
+        return df
     else:
         print(f"Failed to fetch. Status: {response.status_code}")
         return None
+
+
+# DEBUG -----------------------------------------------------------------------------------------------------
+#if __name__ == "__main__":
+#    df = download_file_by_location(2975, 2023, 1, 1)
+
+#    if df is not None:
+#        print(df.head())
+#        print(df.columns)

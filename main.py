@@ -6,26 +6,34 @@ from db import get_connection
 conn = get_connection()
 cur = conn.cursor()
 
-# Get Helsinki bounding box
+# Step 1: Get Helsinki bbox
 bbox = get_bbox("Helsinki")
 
-# Get locations from OpenAQ API
+# Step 2: Get locations
 locations = get_openaq_locations_by_bbox(bbox)
 
-# Pick first location
+if not locations:
+    print("No locations found!")
+    exit()
+
+# Step 3: Pick first location
 location = locations[0]
 location_id = location["id"]
 location_name = location["name"]
 
-# Insert location into database (important for FK)
+print("Using location:", location_id, location_name)
+
+# Step 4: Insert location (important for FK)
 cur.execute("""
     INSERT INTO locations (id, name, city, country)
     VALUES (%s, %s, %s, %s)
     ON CONFLICT (id) DO NOTHING
 """, (location_id, location_name, "Helsinki", "Finland"))
 
-# Download one month of data
+# Step 5: Download and insert data (1 month)
 for day in range(1, 29):
+    print(f"Processing day {day}...")
+
     df = download_file_by_location(location_id, 2023, 1, day)
 
     if df is None:
@@ -50,13 +58,13 @@ for day in range(1, 29):
             INSERT INTO measurements (location_id, sensor_id, value, timestamp)
             VALUES (%s, %s, %s, %s)
         """, (
-            row["locationId"],
+            row["location_id"],   # FIXED (was locationId)
             sensor_id,
             row["value"],
-            row["date"]
+            row["datetime"]       # FIXED (correct column)
         ))
 
-# Commit all changes
+# Step 6: Commit changes
 conn.commit()
 
 print("Data inserted successfully!")
