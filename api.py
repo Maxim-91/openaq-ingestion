@@ -1,27 +1,44 @@
-import requests
 from urllib.parse import quote
+import requests
 
 API_KEY = "fc52bf9fcfc628b0ecaa42719bd20945eafd68bc1q5mlw63yd2u2cn0hs6jnzf2gljhr486u3dkgm2y"
 
 def get_bbox(city):
-    url = f"https://nominatim.openstreetmap.org/search?q={quote(city)}&format=json"
-    headers = {"User-Agent": "OpenAQ"}
+    osm_url = f"https://nominatim.openstreetmap.org/search?q={quote(city)}&format=json"
+    headers = {"User-Agent": "OpenAQCityBBox"}
 
-    response = requests.get(url).json()
+    response = requests.get(osm_url, headers=headers).json()
 
-    bbox = response[0]["boundingbox"]
-    min_lat, max_lat, min_lon, max_lon = bbox
+    if not response:
+        return None
 
-    return f"{min_lon},{min_lat},{max_lon},{max_lat}"
+    # boundingbox sisältää löydetyn kaupungin rajat
+    # siinä on 4 koordinaattipisettä
+    osm_bbox = response[0]['boundingbox']
 
+    # OpenStreetMapin bounding boxin koordinaatit ovat ao järjestyksessä
+    # min_y, max_y, min_x, max_x
+    min_lat, max_lat, min_lon, max_lon = osm_bbox
 
-def get_locations(bbox):
-    url = f"https://api.openaq.org/v3/locations?bbox={bbox}"
-    headers = {"X-API-Key": API_KEY}
+    # järjestetään uudelleen openAQ:lle sopivaan muotoon: min_x, min_y, max_x, max_y
+    openaq_bbox = f"{min_lon},{min_lat},{max_lon},{max_lat}"
 
-    response = requests.get(url, headers=headers)
+    return openaq_bbox
 
+if __name__ == "__main__":
+    bbox = get_bbox("Helsinki")
+    print(bbox)
+
+# tämä funktio saa parametrinaan kaupungin bounding boxin get_bbox-funktiolta
+def get_openaq_locations_by_bbox(_bbox):
+    response = requests.get(
+        f'https://api.openaq.org/v3/locations?limit=1000&page=1&order_by=id&sort_order=asc&bbox={_bbox}',
+        headers={'X-API-Key': API_KEY})
+    _locations = []
+    # muista, että http-statuskoodi 200 on OK
+    # voit myös heittää poikkeuksen,
+    # jos statuskoodi on jotakin muuta kuin 200
     if response.status_code == 200:
-        return response.json()["results"]
+        _locations = response.json()['results']
 
-    return []
+    return _locations
